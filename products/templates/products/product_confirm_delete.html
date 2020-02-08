@@ -1,0 +1,27 @@
+{% extends 'users/navbar.html' %}
+{% block title %} Delete Product {% endblock title %}
+{% block body %}
+    <div class="container">
+	<div class="row">
+		<div class="col-xl-5 offset-xl-3">
+
+
+			<div class="login-register-page margin-top-100 padding-top-100">
+				<!-- Welcome Text -->
+				<div class="welcome-text">
+					<h3>Are you sure you want to delete {{ object.title }}?</h3>
+				</div>
+
+				<!-- Form -->
+				<form method="POST">
+                    {% csrf_token %}
+                    <button class="button full-width button-sliding-icon ripple-effect margin-top-10"  style="background-color: red" type="submit">Yes, Delete <i class="icon-feather-trash-2"></i></button>
+                    <a href="{% url 'dashboard' %}" class="button full-width button-sliding-icon ripple-effect margin-top-10"  style="background-color: darkgreen" type="submit">No</a>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+
+{% endblock body %}

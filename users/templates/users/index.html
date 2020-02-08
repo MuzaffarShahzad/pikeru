@@ -1,0 +1,448 @@
+{% extends 'users/navbar.html' %}
+{% block head %}
+    {% load static %}
+{% endblock head %}
+{% block body %}
+
+<!-- Intro Banner
+================================================== -->
+<!-- add class "disable-gradient" to enable consistent background overlay -->
+<div class="intro-banner" data-background-image="{% static 'users/images/foreast.jpg' %}">
+	<div class="container">
+
+		<!-- Intro Headline -->
+		<div class="row">
+			<div class="col-md-12">
+				<div class="banner-headline">
+					<h3>
+						<strong style="font-size: 40px">Become a Sharemate.</strong>
+						<br>
+						<span>Million of businesses use <strong class="color">Pikeru</strong> to buy and sell their products on sharing.</span>
+					</h3>
+                    <br>
+                    <div class="col-md-8">
+                    <ul class="list-3 color">
+                        <li>Million of users use <strong class="color">Pikeru </strong> Find people with interest in sharing any item or product they post</strong></li>
+						<li>You can share groceries, meat, food products, apartments etc</li>
+						<li>Find Sharemate</li>
+
+					</ul>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+
+                    <a href="{% url 'product_list' %}" class="button button-sliding-icon ripple-effect">Become Sharemate</a>
+                    <a href="{% url 'post_product' %}" class="button button-sliding-icon ripple-effect">Post to share</a>
+				</div>
+			</div>
+		</div>
+        <div class="row" style="float: right">
+            <img src="">
+        </div>
+
+
+
+				</div>
+			</div>
+		</div>
+<!-- Content
+================================================== -->
+<!-- Category Boxes -->
+<div class="section margin-top-65">
+	<div class="container">
+		<div class="row">
+			<div class="col-xl-12">
+
+				<div class="section-headline centered margin-bottom-15">
+					<h3>Popular Product Categories</h3>
+				</div>
+
+				<!-- Category Boxes Container -->
+				<div class="categories-container">
+                    {% for cat in categories %}
+
+					<!-- Category Box -->
+					<a href="{% url 'cat_view' cat.category_name %}" class="category-box">
+						<div class="category-box-icon">
+							<img src="{{ cat.category_pic.url }}">
+						</div>
+						<div class="category-box-counter">612</div>
+						<div class="category-box-content">
+							<h3>{{ cat.category_name}}</h3>
+							<p>{{ cat.category_desc }}</p>
+						</div>
+					</a>
+                    {% endfor %}
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Category Boxes / End -->
+
+	</div>
+</div>
+
+{#    <!-- Features Jobs -->#}
+{#<div class="section gray margin-top-45 padding-top-65 padding-bottom-75">#}
+{#	<div class="container">#}
+{#		<div class="row">#}
+{#			<div class="col-xl-12">#}
+{##}
+{#				<!-- Section Headline -->#}
+{#				<div class="section-headline margin-top-0 margin-bottom-35">#}
+{#					<h3>Featured Products</h3>#}
+{#					<a href="{% url 'product_list' %}" class="headline-link">Browse All Products</a>#}
+{#				</div>#}
+{##}
+{#				<!-- Jobs Container -->#}
+{#				<div class="listings-container compact-list-layout margin-top-35">#}
+{#                    {% for prod in product %}#}
+{##}
+{#					<!-- Job Listing -->#}
+{#					<a href="{% url 'prod_view' prod.slug %}" class="job-listing with-apply-button">#}
+{##}
+{#						<!-- Job Listing Details -->#}
+{#						<div class="job-listing-details">#}
+{##}
+{#							<!-- Logo -->#}
+{#							<div class="job-listing-company-logo">#}
+{#								<img src="{{ prod.image.url }}" alt="">#}
+{#							</div>#}
+{##}
+{#							<!-- Details -->#}
+{#							<div class="job-listing-description">#}
+{#								<h3 class="job-listing-title">{{ prod.title }}</h3>#}
+{##}
+{#								<!-- Job Listing Footer -->#}
+{#								<div class="job-listing-footer">#}
+{#									<ul>#}
+{#										<li><i class="icon-material-outline-business"></i> Seller: {{ prod.user.first_name }}<div class="verified-badge" title="Verified Employer" data-tippy-placement="top"></div></li>#}
+{#										<li><i class="icon-material-outline-location-on"></i> San Francissco</li>#}
+{#										<li><i class="icon-material-outline-business-center"></i> Full Time</li>#}
+{#										<li><i class="icon-material-outline-access-time"></i>{{prod.pub_date}}</li>#}
+{#									</ul>#}
+{#								</div>#}
+{#							</div>#}
+{##}
+{#							<!-- Apply Button -->#}
+{#							<span class="list-apply-button ripple-effect">Get Now</span>#}
+{#						</div>#}
+{#					</a>#}
+{#                    {% endfor %}#}
+{##}
+{#				</div>#}
+{#				<!-- Jobs Container / End -->#}
+{##}
+{#			</div>#}
+{#		</div>#}
+{#	</div>#}
+{#</div>#}
+{#<!-- Featured Jobs / End -->#}
+
+
+<!-- Sign In Popup
+================================================== -->
+<div id="sign-in-dialog" class="zoom-anim-dialog mfp-hide dialog-with-tabs">
+
+	<!--Tabs -->
+	<div class="sign-in-form">
+
+		<ul class="popup-tabs-nav">
+			<li><a href="#login">Log In</a></li>
+			<li><a href="#register">Register</a></li>
+		</ul>
+
+		<div class="popup-tabs-container">
+
+			<!-- Login -->
+			<div class="popup-tab-content" id="login">
+
+				<!-- Welcome Text -->
+				<div class="welcome-text">
+					<h3>We're glad to see you again!</h3>
+					<span>Don't have an account? <a href="#" class="register-tab">Sign Up!</a></span>
+				</div>
+
+				<!-- Form -->
+				<form method="post" id="login-form">
+                    {% csrf_token %}
+                    {% if form.errors %}
+                      <div class="notification error closeable">
+                          <p style="color: red">Please enter correct username and password. <br> <b>Note:</b> both fields may be case-sensitive</p>
+                                <a class="close" href="#"></a>
+                      </div>
+                    {% endif %}
+					<div class="input-with-icon-left">
+						<i class="icon-material-baseline-mail-outline"></i>
+                        {{ form.username }}
+					</div>
+
+					<div class="input-with-icon-left">
+						<i class="icon-material-outline-lock"></i>
+                        {{ form.password }}
+					</div>
+                    <!-- Button -->
+				<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit">Log In <i class="icon-material-outline-arrow-right-alt"></i></button>
+					<a href="#" class="forgot-password">Forgot Password?</a>
+				</form>
+
+				<!-- Social Login -->
+				<div class="social-login-separator"><span>or</span></div>
+				<div class="social-login-buttons">
+					<button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Log In via Facebook</button>
+					<button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Log In via Google+</button>
+				</div>
+
+			</div>
+
+			<!-- Register -->
+			<div class="popup-tab-content" id="register">
+
+				<!-- Welcome Text -->
+				<div class="welcome-text">
+					<h3>Let's create your account!</h3>
+				</div>
+
+				<!-- Account Type -->
+				<div class="account-type">
+					<div>
+						<input type="radio" name="account-type-radio" id="freelancer-radio" class="account-type-radio" checked/>
+						<label for="freelancer-radio" class="ripple-effect-dark"><i class="icon-material-outline-account-circle"></i> Freelancer</label>
+					</div>
+
+					<div>
+						<input type="radio" name="account-type-radio" id="employer-radio" class="account-type-radio"/>
+						<label for="employer-radio" class="ripple-effect-dark"><i class="icon-material-outline-business-center"></i> Employer</label>
+					</div>
+				</div>
+
+				<!-- Form -->
+				<form method="post" id="register-account-form">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+
+                            {% if field.help_text %}
+                                <div class="notification warning closeable">
+                                <small style="color: grey">{{ field.help_text }}</small>
+                                <a class="close" href="#"></a>
+                                </div>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="notification error closeable">
+                                <p style="color: red">{{ error }}</p>
+                                <a class="close" href="#"></a>
+                                </div>
+
+                            {% endfor %}
+                    {% endfor %}
+
+
+                    <div class="input-with-icon-left">
+						<i class="icon-feather-user"></i>
+                        {{ form.username }}
+					</div>
+
+					<div class="input-with-icon-left">
+						<i class="icon-material-baseline-mail-outline"></i>
+                        {{ form.email }}
+					</div>
+
+					<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
+						<i class="icon-material-outline-lock"></i>
+                        {{ form.password1 }}
+					</div>
+
+					<div class="input-with-icon-left">
+						<i class="icon-material-outline-lock"></i>
+                        {{ form.password2 }}
+					</div>
+                    <!-- Button -->
+				<button class="button full-width button-sliding-icon ripple-effect margin-top-10" type="submit">Register <i class="icon-material-outline-arrow-right-alt"></i></button>
+				</form>
+
+				<!-- Social Login -->
+				<div class="social-login-separator"><span>or</span></div>
+				<div class="social-login-buttons">
+					<button class="facebook-login ripple-effect"><i class="icon-brand-facebook-f"></i> Register via Facebook</button>
+					<button class="google-login ripple-effect"><i class="icon-brand-google-plus-g"></i> Register via Google+</button>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Sign In Popup / End -->
+{% endblock body %}
+
+{% block footer %}
+
+    <!-- Spacer -->
+<div class="margin-top-70"></div>
+<!-- Spacer / End-->
+
+    <!-- Footer
+================================================== -->
+<div id="footer">
+
+	<!-- Footer Top Section -->
+	<div class="footer-top-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+
+					<!-- Footer Rows Container -->
+					<div class="footer-rows-container">
+
+						<!-- Left Side -->
+						<div class="footer-rows-left">
+							<div class="footer-row">
+								<div class="footer-row-inner footer-logo">
+									<img src="images/logo2.png" alt="">
+								</div>
+							</div>
+						</div>
+
+						<!-- Right Side -->
+						<div class="footer-rows-right">
+
+							<!-- Social Icons -->
+							<div class="footer-row">
+								<div class="footer-row-inner">
+									<ul class="footer-social-links">
+										<li>
+											<a href="#" title="Facebook" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-facebook-f"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="Twitter" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-twitter"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="Google Plus" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-google-plus-g"></i>
+											</a>
+										</li>
+										<li>
+											<a href="#" title="LinkedIn" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-linkedin-in"></i>
+											</a>
+										</li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+
+							<!-- Language Switcher -->
+							<div class="footer-row">
+								<div class="footer-row-inner">
+									<select class="selectpicker language-switcher" data-selected-text-format="count" data-size="5">
+										<option selected>English</option>
+										<option>Français</option>
+										<option>Español</option>
+										<option>Deutsch</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- Footer Rows Container / End -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Top Section / End -->
+
+	<!-- Footer Middle Section -->
+	<div class="footer-middle-section">
+		<div class="container">
+			<div class="row">
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>For Buyers</h3>
+						<ul>
+							<li><a href="{% url 'product_list' %}"><span>Browse Product</span></a></li>
+{#							<li><a href="#"><span>Add Resume</span></a></li>#}
+							<li><a href="#"><span>New Products Alerts</span></a></li>
+							<li><a href="#"><span>My Bookmarks</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>For Sellers</h3>
+						<ul>
+{#							<li><a href="#"><span>Browse Candidates</span></a></li>#}
+							<li><a href="{% url 'post_product' %}"><span>Post a Product</span></a></li>
+							<li><a href="{% url 'dashboard' %}"><span>Dashboard</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>Helpful Links</h3>
+						<ul>
+							<li><a href="{% url 'contact' %}"><span>Contact</span></a></li>
+							<li><a href="#"><span>Privacy Policy</span></a></li>
+							<li><a href="#"><span>Terms of Use</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Links -->
+				<div class="col-xl-2 col-lg-2 col-md-3">
+					<div class="footer-links">
+						<h3>Account</h3>
+						<ul>
+							<li><a href="{% url 'login' %}"><span>Log In</span></a></li>
+							<li><a href="{% url 'dashboard' %}"><span>My Account</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Newsletter -->
+				<div class="col-xl-4 col-lg-4 col-md-12">
+					<h3><i class="icon-feather-mail"></i> Sign Up For a Newsletter</h3>
+					<p>Weekly breaking news, analysis and cutting edge advices on job searching.</p>
+					<form action="#" method="get" class="newsletter">
+						<input type="text" name="fname" placeholder="Enter your email address">
+						<button type="submit"><i class="icon-feather-arrow-right"></i></button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Middle Section / End -->
+
+	<!-- Footer Copyrights -->
+	<div class="footer-bottom-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-xl-12">
+					© 2020 <strong>Pikeru</strong>. All Rights Reserved.
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer Copyrights / End -->
+
+</div>
+<!-- Footer / End -->
+
+</div>
+<!-- Wrapper / End -->
+{% endblock footer %}

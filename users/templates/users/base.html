@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+{% load static %}
+<!-- Basic Page Needs
+================================================== -->
+<title>{% block title %} {% endblock title %}</title>
+{% block head %} {% endblock head %}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+<!-- CSS
+================================================== -->
+<link rel="stylesheet" href="{% static 'users/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'users/css/colors/blue.css' %}">
+
+</head>
+<body class="gray">
+{% block navbar %} {% endblock navbar %}
+<div class="clearfix"></div>
+<!-- Header Container / End -->
+{% if messages %}
+         {% for message in messages %}
+             <div class="container">
+             <div class="notification {{ message.tags }} closeable">
+                 <p>{{ message }}</p>
+				<a class="close" href="#"></a>
+			 </div>
+             </div>
+         {% endfor %}
+{% endif %}
+{% block body %} {% endblock body %}
+{% block footer %} {% endblock footer %}
+
+
+
+
+<!-- Scripts
+================================================== -->
+<script src="{% static 'users/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'users/js/jquery-migrate-3.0.0.min.js' %}"></script>
+<script src="{% static 'users/js/mmenu.min.js' %}"></script>
+<script src="{% static 'users/js/tippy.all.min.js' %}"></script>
+<script src="{% static 'users/js/simplebar.min.js' %}"></script>
+<script src="{% static 'users/js/bootstrap-slider.min.js' %}"></script>
+<script src="{% static 'users/js/bootstrap-select.min.js' %}"></script>
+<script src="{% static 'users/js/snackbar.js' %}"></script>
+<script src="{% static 'users/js/clipboard.min.js' %}"></script>
+<script src="{% static 'users/js/counterup.min.js' %}"></script>
+<script src="{% static 'users/js/magnific-popup.min.js' %}"></script>
+<script src="{% static 'users/js/slick.min.js' %}"></script>
+<script src="{% static 'users/js/custom.js' %}"></script>
+
+<!-- Snackbar // documentation: https://www.polonel.com/snackbar/ -->
+<script>
+// Snackbar for user status switcher
+$('#snackbar-user-status label').click(function() {
+	Snackbar.show({
+		text: 'Your status has been changed!',
+		pos: 'bottom-center',
+		showAction: false,
+		actionText: "Dismiss",
+		duration: 3000,
+		textColor: '#fff',
+		backgroundColor: '#383838'
+	});
+});
+</script>
+
+</body>
+</html>

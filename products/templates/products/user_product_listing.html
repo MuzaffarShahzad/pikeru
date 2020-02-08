@@ -1,0 +1,223 @@
+{% extends 'users/navbar.html' %}
+{% block head %}
+    {% load static %}
+{% endblock head %}
+{% block body %}
+
+<!-- Dashboard Container -->
+<div class="dashboard-container">
+
+	<!-- Dashboard Sidebar
+	================================================== -->
+	<!-- Dashboard Sidebar
+	================================================== -->
+	<div class="dashboard-sidebar">
+		<div class="dashboard-sidebar-inner" data-simplebar>
+			<div class="dashboard-nav-container">
+
+				<!-- Responsive Navigation Trigger -->
+				<a href="#" class="dashboard-responsive-nav-trigger">
+					<span class="hamburger hamburger--collapse" >
+						<span class="hamburger-box">
+							<span class="hamburger-inner"></span>
+						</span>
+					</span>
+					<span class="trigger-title">Dashboard Navigation</span>
+				</a>
+
+				<!-- Navigation -->
+				<div class="dashboard-nav">
+					<div class="dashboard-nav-inner">
+
+						<ul data-submenu-title="Start">
+							<li class="active"><a href="{% url 'dashboard' %}"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
+							<li class="active"><a href="{% url 'user_product_list' %}"><i class="icon-brand-product-hunt"></i> Products</a></li>
+{#							<li><a href="dashboard-messages.html"><i class="icon-material-outline-question-answer"></i> Messages <span class="nav-tag">2</span></a></li>#}
+							<li><a href="dashboard-bookmarks.html"><i class="icon-material-outline-star-border"></i> Bookmarks</a></li>
+							<li><a href="dashboard-reviews.html"><i class="icon-material-outline-rate-review"></i> Reviews</a></li>
+						</ul>
+
+{#						<ul data-submenu-title="Organize and Manage">#}
+{#							<li><a href="#"><i class="icon-material-outline-business-center"></i> Jobs</a>#}
+{#								<ul>#}
+{#									<li><a href="dashboard-manage-jobs.html">Manage Jobs <span class="nav-tag">3</span></a></li>#}
+{#									<li><a href="dashboard-manage-candidates.html">Manage Candidates</a></li>#}
+{#									<li><a href="dashboard-post-a-job.html">Post a Job</a></li>#}
+{#								</ul>#}
+{#							</li>#}
+{#							<li><a href="#"><i class="icon-material-outline-assignment"></i> Tasks</a>#}
+{#								<ul>#}
+{#									<li><a href="dashboard-manage-tasks.html">Manage Tasks <span class="nav-tag">2</span></a></li>#}
+{#									<li><a href="dashboard-manage-bidders.html">Manage Bidders</a></li>#}
+{#									<li><a href="dashboard-my-active-bids.html">My Active Bids <span class="nav-tag">4</span></a></li>#}
+{#									<li><a href="dashboard-post-a-task.html">Post a Task</a></li>#}
+{#								</ul>#}
+{#							</li>#}
+{#						</ul>#}
+
+						<ul data-submenu-title="Account">
+							<li><a href="{% url 'profile' %}"><i class="icon-material-outline-settings"></i> Settings</a></li>
+							<li><a href="{% url 'logout' %}"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
+						</ul>
+
+					</div>
+				</div>
+				<!-- Navigation / End -->
+
+			</div>
+		</div>
+	</div>
+	<!-- Dashboard Sidebar / End -->
+
+
+	<!-- Dashboard Content
+	================================================== -->
+	<div class="dashboard-content-container" data-simplebar>
+		<div class="dashboard-content-inner" >
+
+			<!-- Dashboard Headline -->
+			<div class="dashboard-headline">
+				<h3>Manage Products</h3>
+
+				<!-- Breadcrumbs -->
+				<nav id="breadcrumbs" class="dark">
+					<ul>
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Dashboard</a></li>
+						<li>Manage Products</li>
+					</ul>
+				</nav>
+			</div>
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Dashboard Box -->
+				<div class="col-xl-12">
+					<div class="dashboard-box margin-top-0">
+
+						<!-- Headline -->
+						<div class="headline">
+							<h3><i class="icon-material-outline-assignment"></i> My Products</h3>
+						</div>
+
+						<div class="content">
+							<ul class="dashboard-box-list">
+                                {% for prod in products %}
+								<li>
+									<!-- Job Listing -->
+									<div class="job-listing width-adjustment">
+
+										<!-- Job Listing Details -->
+										<div class="job-listing-details">
+
+											<!-- Details -->
+											<div class="job-listing-description">
+												<h3 class="job-listing-title"><a href="{% url 'prod_view' prod.slug %}">{{ prod.title }}</a> </h3>
+
+												<!-- Job Listing Footer -->
+												<div class="job-listing-footer">
+													<ul>
+														<li><i class="icon-material-outline-access-time"></i>{{ prod.pub_date }}</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<!-- Buttons -->
+									<div class="buttons-to-right always-visible">
+										<a href="" class="button ripple-effect"><i class="icon-material-outline-supervisor-account"></i> Manage Buyers <span class="button-info" style="background-color: red">3</span></a>
+										<a href="{% url 'product-update' prod.id %}" class="button gray ripple-effect ico" title="Edit" data-tippy-placement="top"><i class="icon-feather-edit"></i></a>
+										<a href="{% url 'product-delete' prod.id %}" class="button gray ripple-effect ico" title="Remove" data-tippy-placement="top"><i class="icon-feather-trash-2"></i></a>
+									</div>
+								</li>
+                                {% endfor %}
+
+							</ul>
+						</div>
+					</div>
+                <!-- Pagination -->
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-md-12">
+						<!-- Pagination -->
+						<div class="pagination-container margin-top-30 margin-bottom-60">
+							<nav class="pagination">
+								<ul>
+                                    {% if is_paginated %}
+                                           {% if page_obj.has_previous %}
+{#                                               <li class="pagination-arrow"><a href="?page=1" class="ripple-effect"></a></li>#}
+									           <li class="pagination-arrow"><a href="?page={{ page_obj.previous_page_number }}" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-left"></i></a></li>
+                                           {% endif %}
+
+                                        {% for num in page_obj.paginator.page_range %}
+                                            {% if page_obj.number == num %}
+                                                <li><a href="?page={{ num }}" class="ripple-effect">{{num}}</a></li>
+                                            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                                                <li><a href="?page={{ num }}" class="ripple-effect">{{num}}</a></li>
+
+                                            {% endif %}
+                                        {% endfor %}
+{#									    <li><a href="#" class="ripple-effect">1</a></li>#}
+{#									     <li><a href="#" class="current-page ripple-effect">2</a></li>#}
+{#									    <li><a href="#" class="ripple-effect">3</a></li>#}
+{#									    <li><a href="#" class="ripple-effect">4</a></li>#}
+                                        {% if page_obj.has_next %}
+                                            <li class="pagination-arrow"><a href="?page={{ page_obj.next_page_number }}" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-right"></i></a></li>
+{#                                            <li class="pagination-arrow"><a href="?page={{ page_obj.paginator.num_pages }}" class="ripple-effect"><i class="icon-material-outline-keyboard-arrow-right"></i></a></li>#}
+
+                                        {% endif %}
+                                    {% endif %}
+								</ul>
+							</nav>
+						</div>
+					</div>
+				</div>
+				<!-- Pagination / End -->
+				</div>
+
+			</div>
+			<!-- Row / End -->
+
+			<!-- Footer -->
+			<div class="dashboard-footer-spacer"></div>
+			<div class="small-footer margin-top-15">
+				<div class="small-footer-copyrights">
+					© 2020 <strong>Pikeru</strong>. All Rights Reserved.
+				</div>
+				<ul class="footer-social-links">
+					<li>
+						<a href="#" title="Facebook" data-tippy-placement="top">
+							<i class="icon-brand-facebook-f"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" title="Twitter" data-tippy-placement="top">
+							<i class="icon-brand-twitter"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" title="Google Plus" data-tippy-placement="top">
+							<i class="icon-brand-google-plus-g"></i>
+						</a>
+					</li>
+					<li>
+						<a href="#" title="LinkedIn" data-tippy-placement="top">
+							<i class="icon-brand-linkedin-in"></i>
+						</a>
+					</li>
+				</ul>
+				<div class="clearfix"></div>
+			</div>
+			<!-- Footer / End -->
+
+		</div>
+	</div>
+	<!-- Dashboard Content / End -->
+
+</div>
+<!-- Dashboard Container / End -->
+
+
+{% endblock body %}

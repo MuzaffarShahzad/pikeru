@@ -1,0 +1,25 @@
+{% extends 'users/navbar.html' %}
+{% block head %}
+    {% load static %}
+{% endblock head %}
+{% block body %}
+<div id="titlebar" class="gradient"> </div>
+
+<!-- Container -->
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+
+			<div class="order-confirmation-page">
+				<div class="col-md-2 offset-5">{{ form.render }}</div>
+				<h2 class="margin-top-30">Pay With Paypal</h2>
+				<p>Your will be redirected to paypal website..</p>
+                <div class="col-md-2"></div>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- Container / End -->
+
+{% endblock body %}
